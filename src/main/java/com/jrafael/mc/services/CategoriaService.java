@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.jrafael.mc.domain.Categoria;
 import com.jrafael.mc.repositories.CategoriaRepository;
+import com.jrafael.mc.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class CategoriaService {
@@ -13,6 +14,13 @@ public class CategoriaService {
 	public CategoriaRepository repo;
 	
 	public Categoria getCategoria(Integer id) {
-		return repo.findOne(id);
+		Categoria cat = repo.findOne(id);
+		
+		if(cat == null) {
+			throw new ObjectNotFoundException("Object not found with id = " + id
+					+ ", Type = " + Categoria.class.getName());
+		}
+		
+		return cat;
 	}
 }
