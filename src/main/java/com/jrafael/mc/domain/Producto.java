@@ -8,53 +8,70 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 @Entity
-public class Categoria implements Serializable {
+public class Producto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
 	private String nome;
-
-	@ManyToMany(mappedBy="categorias")
-	private List<Producto> productos = new ArrayList<>();
-
-	public Categoria() {
+	private Double preco;
+	
+	@ManyToMany
+	@JoinTable(
+		name = "PRODUTO_CATEGORIA", 
+		joinColumns = @JoinColumn(name = "produto_id"),
+		inverseJoinColumns = @JoinColumn(name = "categoria_id")
+	)
+	private List<Categoria> categorias = new ArrayList<>();
+	
+	public Producto() {
+		
 	}
-
-	public Categoria(Integer id, String nome) {
+	
+	public Producto(Integer id, String nome, Double preco) {
 		super();
 		this.id = id;
 		this.nome = nome;
+		this.preco = preco;
 	}
-
+	
 	public Integer getId() {
 		return id;
 	}
-
+	
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
+	
 	public String getNome() {
 		return nome;
 	}
-
+	
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
 	
-	public List<Producto> getProductos() {
-		return productos;
+	public Double getPreco() {
+		return preco;
+	}
+	
+	public void setPreco(Double preco) {
+		this.preco = preco;
 	}
 
-	public void setProductos(List<Producto> productos) {
-		this.productos = productos;
+	public List<Categoria> getCategorias() {
+		return categorias;
+	}
+
+	public void setCategorias(List<Categoria> categorias) {
+		this.categorias = categorias;
 	}
 
 	@Override
@@ -73,7 +90,7 @@ public class Categoria implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Categoria other = (Categoria) obj;
+		Producto other = (Producto) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
