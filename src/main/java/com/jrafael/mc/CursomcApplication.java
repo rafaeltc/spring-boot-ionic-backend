@@ -13,6 +13,7 @@ import com.jrafael.mc.domain.Cidade;
 import com.jrafael.mc.domain.Cliente;
 import com.jrafael.mc.domain.Endereco;
 import com.jrafael.mc.domain.Estado;
+import com.jrafael.mc.domain.ItemPedido;
 import com.jrafael.mc.domain.Pagamento;
 import com.jrafael.mc.domain.PagamentoComBoleto;
 import com.jrafael.mc.domain.PagamentoComCartao;
@@ -25,6 +26,7 @@ import com.jrafael.mc.repositories.CidadeRepository;
 import com.jrafael.mc.repositories.ClienteRepository;
 import com.jrafael.mc.repositories.EnderecoRepository;
 import com.jrafael.mc.repositories.EstadoRepository;
+import com.jrafael.mc.repositories.ItemPedidoRepository;
 import com.jrafael.mc.repositories.PagamentoRepository;
 import com.jrafael.mc.repositories.PedidoRepository;
 import com.jrafael.mc.repositories.ProductoRepository;
@@ -55,6 +57,9 @@ public class CursomcApplication implements CommandLineRunner {
 	
 	@Autowired
 	PagamentoRepository pagamentoRepository;
+	
+	@Autowired
+	ItemPedidoRepository itemPedidoRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -117,5 +122,19 @@ public class CursomcApplication implements CommandLineRunner {
 		
 		pedidoRepository.save(Arrays.asList(ped1,ped2));
 		pagamentoRepository.save(Arrays.asList(pagTo1,pagTo2));
+		
+		//Pedido pedido, Producto producto, Double desconto, Integer quantidade, Double preco
+		ItemPedido ip1 = new ItemPedido(ped1, p1, 0.00, 1, 2000.00);
+		ItemPedido ip2 = new ItemPedido(ped1, p3, 0.00, 2, 80.00);;
+		ItemPedido ip3 = new ItemPedido(ped2, p2, 100.00, 1, 800.00);
+		
+		ped1.getItens().addAll(Arrays.asList(ip1,ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+		
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip3));
+		p3.getItens().addAll(Arrays.asList(ip2));
+		
+		itemPedidoRepository.save(Arrays.asList(ip1,ip2,ip3));
 	}
 }
