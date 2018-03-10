@@ -13,7 +13,7 @@ public class CategoriaService {
 	@Autowired
 	public CategoriaRepository repo;
 	
-	public Categoria getCategoria(Integer id) {
+	public Categoria find(Integer id) {
 		Categoria cat = repo.findOne(id);
 		
 		if(cat == null) {
@@ -28,5 +28,9 @@ public class CategoriaService {
 		obj.setId(null);
 		repo.save(obj);
 		return obj;
+	}
+	
+	public Categoria update(Categoria obj) {
+		return repo.save(obj);
 	}
 }
