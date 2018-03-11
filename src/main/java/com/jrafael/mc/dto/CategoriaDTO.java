@@ -2,6 +2,9 @@ package com.jrafael.mc.dto;
 
 import java.io.Serializable;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+
 import com.jrafael.mc.domain.Categoria;
 
 public class CategoriaDTO implements Serializable {
@@ -9,6 +12,9 @@ public class CategoriaDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Integer id;
+	
+	@NotEmpty(message="Mandatory field")
+	@Length(min=5, max=60, message="Length must be between 5 and 60 characters")
 	private String nome;
 	
 	public CategoriaDTO() {
