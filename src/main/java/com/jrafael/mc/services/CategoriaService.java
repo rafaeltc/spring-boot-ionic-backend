@@ -1,6 +1,7 @@
 package com.jrafael.mc.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -22,14 +23,9 @@ public class CategoriaService {
 	public CategoriaRepository repo;
 	
 	public Categoria find(Integer id) {
-		Categoria cat = repo.findOne(id);
-		
-		if(cat == null) {
-			throw new ObjectNotFoundException("Object not found with id = " + id
-					+ ", Type = " + Categoria.class.getName());
-		}
-		
-		return cat;
+		Optional<Categoria> obj = repo.findById(id);
+		return obj.orElseThrow(() -> new ObjectNotFoundException("Object not found with id = " + id
+				+ ", Type = " + Categoria.class.getName()));
 	}
 	
 	public Categoria insert(Categoria obj) {
@@ -43,9 +39,11 @@ public class CategoriaService {
 	}
 	
 	public void delete(Integer id) {
-		repo.findOne(id);//just to create the error message in case the entity does not exist
+		//repo.findOne(id);//just to create the error message in case the entity does not exist
+		find(id);
 		try {
-			repo.delete(id);
+//			repo.delete(id);
+			repo.deleteById(id);
 		} catch (DataIntegrityViolationException e) {
 			throw new DataIntegrityException("Não é possível excluir uma categoria que possui productos");
 		}
@@ -65,7 +63,8 @@ public class CategoriaService {
 	 * @return
 	 */
 	public Page<Categoria> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
-		PageRequest pageRequest = new PageRequest(page,linesPerPage, Direction.valueOf(direction),orderBy);
+//		PageRequest pageRequest = new PageRequest(page,linesPerPage, Direction.valueOf(direction),orderBy);
+		PageRequest pageRequest = PageRequest.of(page,linesPerPage, Direction.valueOf(direction), orderBy);
 		return repo.findAll(pageRequest);
 	}
 	

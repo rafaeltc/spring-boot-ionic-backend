@@ -1,5 +1,7 @@
 package com.jrafael.mc.services;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,13 +16,8 @@ public class ClienteService {
 	public ClienteRepository repo;
 	
 	public Cliente find(Integer id) {
-		Cliente cat = repo.findOne(id);
-		
-		if(cat == null) {
-			throw new ObjectNotFoundException("Object not found with id = " + id
-					+ ", Type = " + Cliente.class.getName());
-		}
-		
-		return cat;
+		Optional<Cliente> obj = repo.findById(id);
+		return obj.orElseThrow(()-> new ObjectNotFoundException("Object not found with id = " + id
+				+ ", Type = " + Cliente.class.getName()));
 	}
 }
