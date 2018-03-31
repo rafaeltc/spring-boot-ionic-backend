@@ -2,19 +2,41 @@ package com.jrafael.mc.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
+import com.jrafael.mc.services.validation.ClienteInsert;
+
+@ClienteInsert
 public class ClienteNewDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	@NotEmpty(message="Nome obrigatorio")
+	@Length(min=5, max=120, message="O tamanho deve ter um tamanho entre 5 e 1200 caracteres")
 	private String nome;
+	
+	@Email(message="email invalido")
 	private String email;
-	private String cpfOuCnpjM;
+	
+	@NotEmpty(message="Campo obrigatorio")
+	private String cpfOuCnpj;
+	
 	private Integer tipoCliente;
 	
+	@NotEmpty(message="Campo obrigatorio")
 	private String logradouro;
+	
+	@NotEmpty(message="Campo obrigatorio")
 	private String numero;
+	
 	private String complemento;
+	
 	private String bairro;
+	
+	@NotEmpty(message="Campo obrigatorio")
 	private String cep;
 	
 	private String telefone1;
@@ -43,12 +65,12 @@ public class ClienteNewDTO implements Serializable {
 		this.email = email;
 	}
 
-	public String getCpfOuCnpjM() {
-		return cpfOuCnpjM;
+	public String getCpfOuCnpj() {
+		return cpfOuCnpj;
 	}
 
-	public void setCpfOuCnpjM(String cpfOuCnpjM) {
-		this.cpfOuCnpjM = cpfOuCnpjM;
+	public void setCpfOuCnpj(String cpfOuCnpj) {
+		this.cpfOuCnpj = cpfOuCnpj;
 	}
 
 	public Integer getTipoCliente() {
