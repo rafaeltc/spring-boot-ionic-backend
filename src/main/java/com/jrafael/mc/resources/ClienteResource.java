@@ -19,6 +19,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.jrafael.mc.domain.Cliente;
 import com.jrafael.mc.dto.ClienteDTO;
+import com.jrafael.mc.dto.ClienteNewDTO;
 import com.jrafael.mc.services.ClienteService;
 
 @RestController
@@ -34,14 +35,6 @@ public class ClienteResource {
 		return ResponseEntity.ok().body(cat);
 	}
 	
-	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteDTO dto) {
-		Cliente obj = service.fromDTO(dto);
-		obj = service.insert(obj);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-					.buildAndExpand(obj.getId()).toUri();
-		return ResponseEntity.created(uri).build();
-	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
 	public ResponseEntity<Void> update(@Valid @RequestBody ClienteDTO dto, @PathVariable Integer id) {
@@ -75,4 +68,21 @@ public class ClienteResource {
 		return ResponseEntity.noContent().build();
 	}
 	
+	@RequestMapping(method=RequestMethod.POST)
+	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO dto) {
+		Cliente obj = service.fromDTO(dto);
+		obj = service.insert(obj);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+					.buildAndExpand(obj.getId()).toUri();
+		return ResponseEntity.created(uri).build();
+	}
+	
+//	@RequestMapping(method=RequestMethod.POST)
+//	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteDTO dto) {
+//		Cliente obj = service.fromDTO(dto);
+//		obj = service.insert(obj);
+//		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+//					.buildAndExpand(obj.getId()).toUri();
+//		return ResponseEntity.created(uri).build();
+//	}
 }
