@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -101,6 +102,14 @@ public class Pedido implements Serializable {
 
 	public void setItens(Set<ItemPedido> itens) {
 		this.itens = itens;
+	}
+	
+	public double getValorTotal() {
+		double soma = 0.0;
+		for(ItemPedido p : this.itens) {
+			soma += p.getSubTotal();
+		}
+		return soma;
 	}
 
 	@Override
