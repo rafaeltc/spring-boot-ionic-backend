@@ -81,13 +81,34 @@ public class CursomcApplication implements CommandLineRunner {
 		Producto p1 = new Producto(null, "Computador", 2000.00);
 		Producto p2 = new Producto(null, "Impressora", 800.00);
 		Producto p3 = new Producto(null, "Mouse", 80.00);
+		Producto p4 = new Producto(null, "Mesa de escritorio", 300.00);
+		Producto p5 = new Producto(null, "Toalha", 50.00);
+		Producto p6 = new Producto(null, "Colcha", 200.00);
+		Producto p7 = new Producto(null, "TV", 1200.00);
+		Producto p8 = new Producto(null, "Roçadeira", 800.00);
+		Producto p9 = new Producto(null, "Abajour", 100.00);
+		Producto p10 = new Producto(null, "Pendente", 180.00);
+		Producto p11 = new Producto(null, "Shampo", 90.00);
 		
 		cat1.getProductos().addAll(Arrays.asList(p1,p2,p3));
-		cat2.getProductos().addAll(Arrays.asList(p2));
+		cat2.getProductos().addAll(Arrays.asList(p2,p4));
+		cat3.getProductos().addAll(Arrays.asList(p5,p6));
+		cat4.getProductos().addAll(Arrays.asList(p1,p2,p3, p7));
+		cat5.getProductos().addAll(Arrays.asList(p8));
+		cat6.getProductos().addAll(Arrays.asList(p9,p10));
+		cat7.getProductos().addAll(Arrays.asList(p11));
 		
-		p1.getCategorias().addAll(Arrays.asList(cat1));
-		p2.getCategorias().addAll(Arrays.asList(cat1,cat2));
-		p3.getCategorias().addAll(Arrays.asList(cat1));
+		p1.getCategorias().addAll(Arrays.asList(cat1, cat4));
+		p2.getCategorias().addAll(Arrays.asList(cat1,cat2, cat4));
+		p3.getCategorias().addAll(Arrays.asList(cat1, cat4));
+		p4.getCategorias().addAll(Arrays.asList(cat2));
+		p5.getCategorias().addAll(Arrays.asList(cat3));
+		p6.getCategorias().addAll(Arrays.asList(cat3));
+		p7.getCategorias().addAll(Arrays.asList(cat4));
+		p8.getCategorias().addAll(Arrays.asList(cat5));
+		p9.getCategorias().addAll(Arrays.asList(cat6));
+		p10.getCategorias().addAll(Arrays.asList(cat6));
+		p11.getCategorias().addAll(Arrays.asList(cat7));
 		
 		Estado est1 = new Estado(null, "São Paulo");
 		Estado est2 = new Estado(null, "Minas Gerais");
@@ -100,7 +121,7 @@ public class CursomcApplication implements CommandLineRunner {
 		est2.getCidades().addAll(Arrays.asList(cid2,cid3));
 		
 		categoriaRepository.saveAll(Arrays.asList(cat1,cat2,cat3,cat4,cat5,cat6,cat7,cat8));
-		productoRepository.saveAll(Arrays.asList(p1,p2,p3));
+		productoRepository.saveAll(Arrays.asList(p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11));
 		estadoRepository.saveAll(Arrays.asList(est1,est2));
 		cidadeRepository.saveAll(Arrays.asList(cid1,cid2,cid3));
 		
