@@ -8,33 +8,28 @@ import javax.persistence.ManyToOne;
 
 @Embeddable
 public class ItemPedidoPK implements Serializable {
-
 	private static final long serialVersionUID = 1L;
 
 	@ManyToOne
-	@JoinColumn(name = "pedido_id")
+	@JoinColumn(name="pedido_id")
 	private Pedido pedido;
 	
 	@ManyToOne
-	@JoinColumn(name = "producto_id")
+	@JoinColumn(name="producto_id")
 	private Producto producto;
-
+	
 	public Pedido getPedido() {
 		return pedido;
 	}
-
 	public void setPedido(Pedido pedido) {
 		this.pedido = pedido;
 	}
-
 	public Producto getProducto() {
 		return producto;
 	}
-
 	public void setProducto(Producto producto) {
 		this.producto = producto;
 	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -43,7 +38,6 @@ public class ItemPedidoPK implements Serializable {
 		result = prime * result + ((producto == null) ? 0 : producto.hashCode());
 		return result;
 	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -65,5 +59,5 @@ public class ItemPedidoPK implements Serializable {
 			return false;
 		return true;
 	}
-
+	
 }
