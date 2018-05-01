@@ -14,7 +14,6 @@ import com.jrafael.mc.domain.enums.EstadoPagamento;
 import com.jrafael.mc.repositories.ItemPedidoRepository;
 import com.jrafael.mc.repositories.PagamentoRepository;
 import com.jrafael.mc.repositories.PedidoRepository;
-import com.jrafael.mc.repositories.ProductoRepository;
 import com.jrafael.mc.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -29,14 +28,14 @@ public class PedidoService {
 	@Autowired
 	private PagamentoRepository pagamentoRepo;
 	
-	@Autowired
-	private ProductoRepository productoRepo;
-	
 	@Autowired 
 	private ProductoService productoService;
 	
 	@Autowired
 	private ItemPedidoRepository itemPedidoRepository;
+	
+	@Autowired
+	private ClienteService clienteService;
 	
 	public Pedido find(Integer id) {
 		Optional<Pedido> obj = repo.findById(id);
@@ -50,6 +49,7 @@ public class PedidoService {
 		
 		pedido.setId(null);
 		pedido.setInstante(new Date());
+		pedido.setCliente(clienteService.find(pedido.getCliente().getId()));
 		pedido.getPagamento().setEstado(EstadoPagamento.PENDENTE);
 		pedido.getPagamento().setPedido(pedido);
 		
@@ -62,6 +62,7 @@ public class PedidoService {
 		
 		for(ItemPedido ip: pedido.getItens()) {
 			ip.setDesconto(0.0);
+			ip.setProducto(productoService.find(ip.getProducto().getId()));
 			ip.setPreco(productoService.find(ip.getProducto().getId()).getPreco());
 //			ip.setPreco(productoRepo.findById(ip.getProducto().getId()).get().getPreco());
 			ip.setPedido(pedido);
